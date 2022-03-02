@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>姓名案例_计算属性</title>
+    <script type = "text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <!-- 
+        计算属性
+            1.定义：要用的属性不存在，要通过已有属性计算得来。
+            2.原理：底层借助来Object.defineproperty方法提供的getter和setter.
+            3.优势：与methods实现相比，内部有缓存机制（复用）效率更高，调试方便。
+            
+     -->
+    <div id="root">
+        姓：
+        <input type="text" v-model:value="firstName"> <br>
+        名：
+        <input type="text" v-model:value="lastName"> <br>
+        姓名
+        <span>{{fullName}}</span>
+    </div>
+    
+    <script type="text/javascript">
+        Vue.config.productionTip = false;
+        
+        const vm = new Vue({
+            el:'#root',
+            data:{
+                firstName:'张',
+                lastName:'三'
+            },
+            computed:{
+                fullName:{
+                    //当有人读取fullName时，get就会被调用
+                    //1.初次读取fullName时，2.所依赖的数据发生变化时
+                    get(){
+                        return this.firstName +'-'+ this.lastName; 
+                    },
+                    set(vlaue){
+                        const arr= vlaue.split('-');
+                        this.firstName = arr[0];
+                        this.lastName = arr[1];
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
