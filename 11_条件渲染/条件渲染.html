@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>条件渲染</title>
+    <script type = "text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <!-- 
+    条件渲染
+        1.v-if
+            适用于：切换频率较低的场景。
+            特点：不展示DOM元素直接移除。
+            注意：v-if可以和v-else-if、v-else一起使用，但要求结构不能被打断。
+        2.v-show
+            适用于：切换频率较高的场景。
+            特点：不展示的DOM元素未被移除，仅仅是使用样式隐藏
+     -->
+    <div id="root">
+        <h2 v-show="false">欢迎来到{{name}}</h2>
+
+        <h2 v-if="false">欢迎来到{{name}}</h2>
+        <hr>
+        <h2>当前i值是:{{i}}</h2>
+        <button @click="i++">点我i+1</button>
+
+        <div v-if="i==1">Angualr</div>
+        <div v-else-if="i==2">React</div>
+        <div v-else>Vue</div>
+
+        <!-- v-if与tmplate的配合使用 -->
+        <template v-if="i==1">
+            <h2>nihao</h2>
+            <h2>shanghai</h2>
+            <h2>zhongguo</h2>
+        </template>
+    </div>
+    
+    <script type="text/javascript">
+        Vue.config.productionTip = false;
+        
+        const vm = new Vue({
+            el:'#root',
+            data:{
+                name:'atguigu',
+                i:0
+            }
+        });
+    </script>
+</body>
+</html>
