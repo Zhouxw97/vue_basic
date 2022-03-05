@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>收集表单数据</title>
+    <script type = "text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <!-- 
+    收集表单数据：
+        <input type="text"/> v-model收集的是value的值，用户输入的就是value值。
+        <input type="radio"/> v-model收集的是value的值，且要给标签配置value值。
+        <input type="checkbox"/>
+            1.没有配置input的value属性，那么收集的就是checked(勾选 or 未勾选，是布尔值)
+            2.配置input的value属性：
+                (1).v-model的初识值是非数组的，那么收集就是checked(勾选 or 未勾选，是布尔值)
+                (2).              是数组，那么收集的就是value组成的数组
+        备注：v-model的三个修饰符
+            lazy:失去焦点在收集数据
+            number:输入字符串转为有效数字
+            trim:输入首尾空格过滤
+     -->
+    <div id="root">
+        <form @submit.prevent="demo">
+            <label for="zh">账号：</label><input type="text" id="zh" v-model.trim="userInfo.account"><br><br>
+            <label for="mm">密码：</label><input type="password" id="mm" v-model="userInfo.password"><br><br>
+            年龄：<input type="number" v-model.number="userInfo.age"><br>
+            性别：
+            男<input type="radio" name="sex" value="male" v-model="userInfo.sex">
+            女<input type="radio" name="sex" value="female" v-model="userInfo.sex"><br><br>
+            爱好：
+            学习<input type="checkbox" v-model="userInfo.hobby" value="study">
+            打游戏<input type="checkbox" v-model="userInfo.hobby" value="game">
+            吃饭<input type="checkbox" v-model="userInfo.hobby" value="eat"><br><br>
+            所属校区
+            <select v-model="userInfo.city">
+                <option value="">请选择校区</option>
+                <option value="beijing">北京</option>
+                <option value="shanghai">上海</option>
+                <option value="shenzhen">深圳</option>
+                <option value="wuhan">武汉</option>
+            </select><br><br>
+            其它信息：<textarea v-model.lazy="userInfo.other"></textarea><br><br>
+            <input type="checkbox" v-model="userInfo.agree" id="agree">
+            <label for="agree">阅读并接受</label>
+            <a href="http://www.atguigu.com">《用户协议》</a><br><br>
+            <button @click="">提交</button>
+        </form>
+    </div>
+    
+    <script type="text/javascript">
+        Vue.config.productionTip = false;
+        
+        const vm = new Vue({
+            el:'#root',
+            data:{
+                userInfo:{
+                    account:'',
+                    password:'',
+                    age:0,
+                    sex:'female',
+                    hobby:[],
+                    city:'beijing',
+                    other:'',
+                    agree:''
+                }
+            },
+            methods:{
+                demo(){
+                    console.log(JSON.stringify(this.userInfo))
+                }
+            }
+        });
+    </script>
+</body>
+</html>
