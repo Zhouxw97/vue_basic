@@ -10,10 +10,7 @@
         
      -->
     <div id="root">
-
-        <school>
-            
-        </school>
+        
     </div>
 
     <script type="text/javascript">
@@ -37,8 +34,7 @@
         })
 
         //定义school组件
-        const s = Vue.extend({
-            name:'school',
+        const school = Vue.extend({
             template:`
                 <div>
                     <h2>学校名称：{{schoolName}}</h2>
@@ -58,13 +54,39 @@
             }
         })
 
-        
-        
+        //定义hello组件
+        const hello = Vue.extend({
+            template:`
+                <h2>你好，{{msg}}</h2>
+            `,
+            data(){
+                return {
+                    msg:'zhou'
+                }
+            }
+        })
+
+        //定义app组件
+        const app = Vue.extend({
+            template:`
+                <div>
+                    <hello></hello>
+                    <school></school>
+                </div>
+            `,
+            components:{
+                school:school,
+                hello:hello
+            }
+        })
+
+  
         const vm = new Vue({
+            template:'<app></app>',
             el:'#root',
             //注册组件
             components:{
-                'school':s
+                app
             }
         });
         
